@@ -12,5 +12,7 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-      - run: dotnet build DiscogsClient.sln
+      # Build only the test project (and what it references): the solution also has
+      # DiscogsAuthenticationConsole, which targets .NET Framework 4.6.1 and can't build on Linux.
+      - run: dotnet build DiscogsClient.Test/DiscogsClient.Test.csproj
       - run: dotnet test DiscogsClient.Test/DiscogsClient.Test.csproj --no-build
